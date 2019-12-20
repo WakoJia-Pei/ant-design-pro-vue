@@ -39,7 +39,7 @@
             <a slot="title">{{ item.title }}</a>
           </a-list-item-meta>
           <div slot="actions">
-            <a>编辑</a>
+            <a @click="$refs.taskForm.edit(item)">编辑</a>
           </div>
           <div slot="actions">
             <a-dropdown>

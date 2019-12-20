@@ -59,6 +59,7 @@ export default {
       this.visible = true
     },
     edit (record) {
+      console.log('编辑选中记录', record)
       const { form: { setFieldsValue } } = this
       this.visible = true
       this.$nextTick(() => {
@@ -67,7 +68,7 @@ export default {
     },
     handleSubmit () {
       const { form: { validateFields } } = this
-      this.visible = true
+      this.visible = false
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
