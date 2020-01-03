@@ -65,3 +65,22 @@ export function removeLoadingAnimate (id = '', timeout = 1500) {
     document.body.removeChild(document.getElementById(id))
   }, timeout)
 }
+
+// 格式化日期参数格式
+export function formatDateParams (str) {
+  const currentDate = new Date()
+  const _year = currentDate.getFullYear()
+  const _month = currentDate.getMonth() + 1
+  const _day = currentDate.getDate()
+  const formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : '0' + n
+  }
+  if (str === 'day') {
+    return [_year, _month, _day].map(formatNumber).join('-')
+  } else if (str === 'month') {
+    return [_year, _month].map(formatNumber).join('-')
+  } else {
+    return _year.toString()
+  }
+}

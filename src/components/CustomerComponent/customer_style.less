@@ -1,0 +1,80 @@
+.form-header{
+  display: flex;
+  //margin-bottom: 16px;
+  .form-header-search, .form-header-action{
+    flex: auto;
+    .form-header-item{
+      margin-left: 16px;
+      &.picker{
+        width: 200px;
+        .ant-input{
+          padding: 4px 8px;
+        }
+        .ant-calendar-picker-icon{
+          right: 6px;
+        }
+        .ant-calendar-picker-clear{
+          right: 6px;
+        }
+      }
+      &.select{
+        width: 116px;
+        .ant-select-selection__rendered{
+          margin: 0 8px;
+        }
+        .ant-select-arrow{
+          right: 6px;
+        }
+      }
+      &.radio-group{
+        .ant-radio-button-wrapper{
+          padding: 0 10px;
+          font-size: 13px;
+        }
+        //margin-right: 0;
+        //.ant-radio-button-wrapper{
+        //  padding: 0 8px;
+        //  border: none;
+        //  z-index: 1;
+        //  &:not(:first-child)::before{
+        //    height: 50%;
+        //    top:25%;
+        //    z-index:2;
+        //  }
+        //  &.ant-radio-button-wrapper-checked{
+        //    box-shadow: none;
+        //    font-weight: 700;
+        //  }
+        //  &.ant-radio-button-wrapper-checked::before{
+        //    background-color: #d9d9d9 !important;
+        //    opacity: 1;
+        //  }
+        //}
+      }
+      &.input-search{
+        width: 200px;
+        .ant-input{
+          padding: 4px 8px;
+        }
+        .ant-input-suffix{
+          right: 6px;
+        }
+      }
+    }
+  }
+  .form-header-action{
+    flex: none;
+    .form-action-item {
+      margin-left: 16px;
+      &.input-search{
+        width: 200px;
+        .ant-input{
+          padding: 4px 8px;
+        }
+        .ant-input-suffix{
+          right: 6px;
+        }
+      }
+    }
+  }
+}

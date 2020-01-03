@@ -6,10 +6,21 @@ const api = {
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
-  orgTree: '/org/tree'
+  orgTree: '/org/tree',
+  lineChart: '/lineChart'
 }
 
 export default api
+
+export function GetReportTaskList (taskId, skillId, seatId, timeSpan, interval) {
+  return axios({
+    url: api.lineChart,
+    method: 'get',
+    params: {
+      taskId, skillId, seatId, timeSpan, interval
+    }
+  })
+}
 
 export function getUserList (parameter) {
   return axios({

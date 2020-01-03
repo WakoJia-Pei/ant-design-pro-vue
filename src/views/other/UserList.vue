@@ -226,8 +226,9 @@ export default {
   },
   methods: {
     handleEdit (record) {
+      record.status = record.status + ''
       this.mdl = Object.assign({}, record)
-
+      console.log(this.mdl)
       this.mdl.permissions.forEach(permission => {
         permission.actionsOptions = permission.actionEntitySet.map(action => {
           return { label: action.describe, value: action.action, defaultCheck: action.defaultCheck }

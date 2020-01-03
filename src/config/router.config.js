@@ -320,6 +320,12 @@ export const asyncRouterMap = [
                 meta: { title: '权限列表', keepAlive: true }
               }
             ]
+          },
+          {
+            path: '/other/radio-datepicker',
+            name: 'RadioDatepicker',
+            component: () => import('@/views/other/RadioDatepicker'),
+            meta: { title: '单选组和日期选择器混用', icon: 'tool', keepAlive: true, permission: [ 'dashboard' ] }
           }
         ]
       }
