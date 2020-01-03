@@ -44,22 +44,6 @@
         <div v-else class="nodata" style="height: 400px"></div>
       </div>
     </a-card>
-
-    <a-card title="动态表头" style="margin-top: 24px">
-      <!--表格-->
-      <div id="table">
-        <a-table
-          class="table-stripe"
-          bordered
-          :rowKey="record => record.word"
-          :columns="columns"
-          :dataSource="tableData"
-          :pagination="false"
-          :loading="loading"
-          :scroll="tbScroll">
-        </a-table>
-      </div>
-    </a-card>
   </div>
 </template>
 
@@ -84,7 +68,6 @@ export default {
         { key: 'duration', tab: '通话时长' },
         { key: 'contactRate', tab: '通话接通率' }
       ],
-      columns: [],
       taskItem: '0',
       skillItem: '0',
       seatItem: '0',
@@ -95,9 +78,6 @@ export default {
       interval: '1h',
       totalCount: [],
       chartLoading: false,
-      loading: false,
-      tableData: [],
-      tbScroll: { x: 0 },
 
       yearList: ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020']
     }
@@ -109,7 +89,6 @@ export default {
   mounted () {
     this.dateRange = formatDateParams('day')
     // this.getChartData(this.taskItem, this.skillItem, this.seatItem, this.timeSpan, this.interval);
-    // this.getTableData(this.taskItem, this.skillItem, this.seatItem, this.timeSpan, this.interval);
   },
   computed: {
     chartTitle () {
@@ -120,24 +99,20 @@ export default {
   watch: {
     taskItem (val) {
       console.log('第一个下拉菜单', val)
-      this.getTableData(val, this.skillItem, this.seatItem, this.timeSpan, this.interval)
     },
     seatItem (val) {
       console.log('第三个下拉菜单', val)
-      this.getTableData(this.taskItem, this.skillItem, val, this.timeSpan, this.interval)
     },
 
     dateRange (val) {
       const reg = /-+/g
       this.timeSpan = reg.test(val) ? val.replace(/-/g, '').replace(/~/g, '-') : val
       this.getChartData(this.taskItem, this.skillItem, this.seatItem, this.timeSpan, this.interval)
-      this.getTableData(this.taskItem, this.skillItem, val, this.timeSpan, this.interval)
       console.log('时间选择器变化', this.timeSpan, val)
     },
     interval (val) {
       console.log('小时分类', val)
       this.getChartData(this.taskItem, this.skillItem, this.seatItem, this.timeSpan, val)
-      this.getTableData(this.taskItem, this.skillItem, this.seatItem, this.timeSpan, val)
     }
   },
   methods: {
@@ -273,99 +248,6 @@ export default {
           lineWidth: 1
         })
       chart.render()
-    },
-
-    // 获取表格数据
-    getTableData (taskItem, skillItem, seatItem, dateRange, interval) {
-      this.loading = true
-      const data = [{
-        word: '呼入次数',
-        '00:00-02:00': parseInt(Math.random() * 100 + 1),
-        '02:00-04:00': parseInt(Math.random() * 100 + 1),
-        '04:00-06:00': parseInt(Math.random() * 100 + 1),
-        '06:00-08:00': parseInt(Math.random() * 100 + 1),
-        '08:00-10:00': parseInt(Math.random() * 100 + 1),
-        '10:00-12:00': parseInt(Math.random() * 100 + 1),
-        '12:00-14:00': parseInt(Math.random() * 100 + 1),
-        '14:00-16:00': parseInt(Math.random() * 100 + 1),
-        '16:00-18:00': parseInt(Math.random() * 100 + 1),
-        '18:00-20:00': parseInt(Math.random() * 100 + 1),
-        '20:00-22:00': parseInt(Math.random() * 100 + 1),
-        '22:00-00:00': parseInt(Math.random() * 100 + 1),
-        '22:00-00:01': parseInt(Math.random() * 100 + 1),
-        '22:00-00:03': parseInt(Math.random() * 100 + 1),
-        '22:00-00:04': parseInt(Math.random() * 100 + 1),
-        '22:00-00:05': parseInt(Math.random() * 100 + 1),
-        '22:00-00:06': parseInt(Math.random() * 100 + 1),
-        '22:00-00:07': parseInt(Math.random() * 100 + 1),
-        '22:00-00:08': parseInt(Math.random() * 100 + 1),
-        '22:00-00:09': parseInt(Math.random() * 100 + 1),
-        '22:00-00:10': parseInt(Math.random() * 100 + 1),
-        '22:00-00:11': parseInt(Math.random() * 100 + 1),
-        '22:00-00:12': parseInt(Math.random() * 100 + 1),
-        '22:00-00:13': parseInt(Math.random() * 100 + 1),
-        total: parseInt(Math.random() * 100 + 1) * 4
-      }, {
-        word: '呼入接起次数',
-        '00:00-03:00': parseInt(Math.random() * 100 + 1),
-        '03:00-06:00': parseInt(Math.random() * 100 + 1),
-        '06:00-09:00': parseInt(Math.random() * 100 + 1),
-        '09:00-12:00': parseInt(Math.random() * 100 + 1),
-        total: parseInt(Math.random() * 100 + 1) * 4
-      }, {
-        word: '呼出次数',
-        '00:00-03:00': parseInt(Math.random() * 100 + 1),
-        '03:00-06:00': parseInt(Math.random() * 100 + 1),
-        '06:00-09:00': parseInt(Math.random() * 100 + 1),
-        '09:00-12:00': parseInt(Math.random() * 100 + 1),
-        total: parseInt(Math.random() * 100 + 1) * 4
-      }, {
-        word: '呼出接起次数',
-        '00:00-03:00': parseInt(Math.random() * 100 + 1),
-        '03:00-06:00': parseInt(Math.random() * 100 + 1),
-        '06:00-09:00': parseInt(Math.random() * 100 + 1),
-        '09:00-12:00': parseInt(Math.random() * 100 + 1),
-        total: parseInt(Math.random() * 100 + 1) * 4
-      }]
-
-      setTimeout(() => {
-        const colLen = Object.keys(data[0]).length - 2
-        const width = colLen > 13 ? 108 : ((document.getElementById('table').clientWidth - 180) / colLen)
-        this.tbScroll = {
-          x: colLen * width + 180
-        }
-        this.columns = [
-          {
-            title: '栏目',
-            dataIndex: 'word',
-            width: 120,
-            fixed: 'left'
-          },
-          {
-            title: '总计',
-            dataIndex: 'total',
-            width: 60,
-            fixed: 'left'
-          }
-        ]
-
-        // for (let i in data) {
-        for (const k in data[0]) {
-          if (k !== 'word' && k !== 'total') {
-            this.columns.push({
-              title: k,
-              dataIndex: k,
-              width: width,
-              align: 'center'
-            })
-          }
-        }
-        // }
-      }, 0)
-      setTimeout(() => {
-        this.loading = false
-        this.tableData = data
-      }, 1000)
     }
   }
 }

@@ -326,6 +326,24 @@ export const asyncRouterMap = [
             name: 'RadioDatepicker',
             component: () => import('@/views/other/RadioDatepicker'),
             meta: { title: '单选组和日期选择器混用', icon: 'tool', keepAlive: true, permission: [ 'dashboard' ] }
+          },
+          {
+            path: '/other/antd-table',
+            name: 'AntDtable',
+            component: RouteView,
+            meta: { title: 'AntD Table示例', icon: 'tool', keepAlive: true, permission: [ 'dashboard' ] },
+            redirect: '/other/antd-table/row',
+            children: [{
+              path: '/other/antd-table/row',
+              name: 'AntDtableRowDemo',
+              component: () => import('@/views/other/AntDtableRowDemo'),
+              meta: { title: '行合并示例', icon: 'tool', keepAlive: true, permission: [ 'dashboard' ] }
+            }, {
+              path: '/other/antd-table/tableHeader',
+              name: 'AntDtableHeaderDemo',
+              component: () => import('@/views/other/AntDtableHeaderDemo'),
+              meta: { title: '动态表头示例', icon: 'tool', keepAlive: true, permission: [ 'dashboard' ] }
+            }]
           }
         ]
       }
