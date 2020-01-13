@@ -21,7 +21,7 @@
 
               <radio-group-picker :yearList="yearList" @onPickerChange="onRadioPickerChange"/>
 
-              <a-range-picker size="default" @change="onPickerChange" class="form-header-item picker"/>
+<!--              <a-range-picker size="default" @change="onPickerChange" class="form-header-item picker"/>-->
               <a-select v-model="interval" class="form-header-item select" style="width: 94px">
                 <a-select-option value="1h">按小时</a-select-option>
                 <a-select-option value="30m">按半小时</a-select-option>
@@ -128,9 +128,9 @@ export default {
     },
 
     // 选择时间段
-    onPickerChange (date, dateString) {
-      this.dateRange = dateString[0] + '~' + dateString[1]
-    },
+    // onPickerChange (date, dateString) {
+    //   this.dateRange = dateString[0] + '~' + dateString[1]
+    // },
     getTask () {
       // 获取任务列表
       // GetTaskFilter().then(res => {

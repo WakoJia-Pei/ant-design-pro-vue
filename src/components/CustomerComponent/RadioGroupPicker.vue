@@ -1,6 +1,6 @@
 <template>
   <div class="form-header">
-    <a-radio-group v-model="reportType" class="form-header-item radio-group">
+    <a-radio-group v-model="reportType" class="form-header-item radio-group" @change="onChange">
       <a-radio-button value="day" @click="showDayCalendar = true">日报</a-radio-button>
       <a-radio-button value="month" @click="showMonthCalendar = true">月报</a-radio-button>
       <a-radio-button value="year" @click="showYearCalendar = true">年报</a-radio-button>
@@ -20,6 +20,8 @@
       </div>
     </div>
     <div class="maskCalendar" v-show="showDayCalendar || showMonthCalendar || showYearCalendar" @click="onHideCalendar"></div>
+
+    <a-range-picker size="default" @change="onPickerChange" class="form-header-item picker"/>
   </div>
 </template>
 
@@ -36,6 +38,7 @@ export default {
   data () {
     return {
       reportType: 'day',
+      lastReportType: 'day',
       dateRange: '',
       showDayCalendar: false,
       showMonthCalendar: false,
@@ -43,108 +46,112 @@ export default {
       showMaskCalendar: false
     }
   },
-  watch: {
-    reportType (value) {
-      this.showMaskCalendar = true
-      this.showDayCalendar = value === 'day'
-      this.showMonthCalendar = value === 'month'
-      this.showYearCalendar = value === 'year'
-      this.dateRange = formatDateParams(value)
-      // console.log('日报/月报/年报', this.dateRange, value);
-    }
-  },
   beforeDestroy: function () {
     document.body.removeAttribute('class', 'cus-calendar-body')
   },
   mounted () {
     document.getElementsByTagName('body')[0].className = 'cus-calendar-body'
-    if (this.reportType === 'day') {
-      this.dateRange = formatDateParams('day')
-    }
   },
   methods: {
+    onChange (e) {
+      this.showMaskCalendar = true
+      if (['day', 'month', 'year'].includes(e.target.value)) {
+        this.showDayCalendar = e.target.value === 'day'
+        this.showMonthCalendar = e.target.value === 'month'
+        this.showYearCalendar = e.target.value === 'year'
+        if (e.target.value === 'year') {
+          this.dateRange = formatDateParams(e.target.value)
+        }
+      }
+    },
+
     // 选择日报-日期
     onPickerDayChange (date, dateString) {
       this.dateRange = dateString
+      this.lastReportType = this.reportType
       this.$emit('onPickerChange', dateString)
-      console.log('[组件]选择日报', date, dateString)
-      this.onHideCalendar()
+      this.onHideCalendar('C')
     },
 
     // 选择月报-月份
     onPickerMonthChange (date, dateString) {
       this.dateRange = dateString
+      this.lastReportType = this.reportType
       this.$emit('onPickerChange', dateString)
-      console.log('[组件]选择月报', date, dateString)
-      this.onHideCalendar()
+      this.onHideCalendar('C')
     },
 
     // 选择年报-年份
     onPickerYearChange (val) {
       this.dateRange = val
+      this.lastReportType = this.reportType
       this.$emit('onPickerChange', val)
-      console.log('[组件]选择年报', val)
-      this.onHideCalendar()
+      this.onHideCalendar('C')
     },
     // 隐藏或关闭日报，月报，年报下拉框
-    onHideCalendar () {
+    onHideCalendar (mode) {
+      if (mode !== 'C') {
+        this.reportType = this.lastReportType
+      }
       this.showMaskCalendar = false
       this.showDayCalendar = false
       this.showMonthCalendar = false
       this.showYearCalendar = false
+    },
+    // 选择时间段
+    onPickerChange (date, dateString) {
+      if (dateString[0] && dateString[1]) {
+        this.reportType = ''
+        this.lastReportType = ''
+        this.dateRange = dateString[0] + '~' + dateString[1]
+        this.$emit('onPickerChange', this.dateRange)
+      }
     }
   }
 }
 </script>
 
 <style lang="less">
-  .form-header {
+  .form-header{
     position: relative;
   }
-
-  .timeSpanPup {
+  .timeSpanPup{
     position: absolute;
     top: 36px;
-    right: -135px;
+    right: 80px;
     z-index: 999;
     width: 278px;
   }
-
-  .maskCalendar {
+  .maskCalendar{
     width: 100%;
     height: 100%;
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
-    top: 0;
+    top:0;
     z-index: 880;
   }
-
-  .calendar-wrap {
+  .calendar-wrap{
     border-radius: 4px;
     background: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-
-    .ant-calendar-month-panel-body {
+    .ant-calendar-month-panel-body{
       display: flex;
       flex-wrap: wrap;
       padding: 16px 0;
     }
-
-    .ant-calendar-month-panel-cell {
+    .ant-calendar-month-panel-cell{
       width: 33.3%;
       padding: 10px 0;
     }
   }
-
-  .echartsbox {
+  .echartsbox{
     width: 100%;
     height: 400px;
   }
-
-  .cus-calendar-body {
-    .ant-calendar-input-wrap {
+  .cus-calendar-body{
+    .ant-calendar-input-wrap{
       display: none;
     }
   }
