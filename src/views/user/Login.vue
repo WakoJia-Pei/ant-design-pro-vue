@@ -29,10 +29,8 @@
           </a-form-item>
 
           <a-form-item>
-            <a-input
+            <a-input-password
               size="large"
-              type="password"
-              autocomplete="false"
               placeholder="密码: admin or ant.design"
               v-decorator="[
                 'password',
@@ -40,7 +38,7 @@
               ]"
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
+            </a-input-password>
           </a-form-item>
         </a-tab-pane>
         <a-tab-pane key="tab2" tab="手机号登录">
@@ -72,7 +70,7 @@
       </a-tabs>
 
       <a-form-item>
-        <a-checkbox v-decorator="['rememberMe']">自动登录</a-checkbox>
+        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">自动登录</a-checkbox>
         <router-link
           :to="{ name: 'recover', params: { user: 'aaa'} }"
           class="forge-password"

@@ -5,7 +5,7 @@ const info = (options) => {
   console.log('options', options)
   const userInfo = {
     'id': '4291d7da9005377ec9aec4a71ea837f',
-    'name': '萧山挑衅子',
+    'name': '天野远子',
     'username': 'admin',
     'password': '',
     'avatar': '/avatar2.jpg',
@@ -416,16 +416,6 @@ const userNav = (options) => {
       },
       'component': 'Analysis',
       'path': '/dashboard/analysis'
-    },
-    {
-      'name': 'tests',
-      'parentId': 1,
-      'id': 8,
-      'meta': {
-        'title': '测试功能',
-        'show': true
-      },
-      'component': 'TestWork'
     },
 
     // form

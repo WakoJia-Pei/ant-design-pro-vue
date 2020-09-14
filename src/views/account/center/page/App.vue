@@ -69,7 +69,7 @@ for (let i = 0; i < 11; i++) {
 }
 
 export default {
-  name: 'App',
+  name: 'Article',
   components: {},
   data () {
     return {
